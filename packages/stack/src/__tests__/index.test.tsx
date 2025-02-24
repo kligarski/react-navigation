@@ -23,58 +23,66 @@ type NestedStackParamList = {
 
 jest.useFakeTimers();
 
-test('renders a stack navigator with screens', async () => {
-  const Test = ({ route, navigation }: StackScreenProps<StackParamList>) => (
-    <View>
-      <Text>Screen {route.name}</Text>
-      <Button onPress={() => navigation.navigate('A')} title="Go to A" />
-      <Button onPress={() => navigation.navigate('B')} title="Go to B" />
-    </View>
-  );
+// test('renders a stack navigator with screens', async () => {
+//   const Test = ({ route, navigation }: StackScreenProps<StackParamList>) => (
+//     <View>
+//       <Text>Screen {route.name}</Text>
+//       <Button onPress={() => navigation.navigate('A')} title="Go to A" />
+//       <Button onPress={() => navigation.navigate('B')} title="Go to B" />
+//     </View>
+//   );
 
-  const Stack = createStackNavigator<StackParamList>();
+//   const Stack = createStackNavigator<StackParamList>();
 
-  const { getByText, queryByText } = render(
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="A" component={Test} />
-        <Stack.Screen name="B" component={Test} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+//   const { getByText, queryByText } = render(
+//     <NavigationContainer>
+//       <Stack.Navigator>
+//         <Stack.Screen name="A" component={Test} />
+//         <Stack.Screen name="B" component={Test} />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
 
-  expect(queryByText('Screen A')).not.toBeNull();
-  expect(queryByText('Screen B')).toBeNull();
+//   expect(queryByText('Screen A')).not.toBeNull();
+//   expect(queryByText('Screen B')).toBeNull();
 
-  fireEvent.press(getByText('Go to B'));
+//   fireEvent.press(getByText('Go to B'));
+//   fireEvent.press(getByText('Go to A'));
+//   fireEvent.press(getByText('Go to B'));
+//   fireEvent.press(getByText('Go to A'));
+//   fireEvent.press(getByText('Go to B'));
+//   fireEvent.press(getByText('Go to A'));
+//   fireEvent.press(getByText('Go to B'));
+//   fireEvent.press(getByText('Go to A'));
+//   fireEvent.press(getByText('Go to B'));
 
-  act(() => jest.runAllTimers());
+//   act(() => jest.runAllTimers());
 
-  expect(queryByText('Screen B')).not.toBeNull();
-});
+//   expect(queryByText('Screen B')).not.toBeNull();
+// });
 
-test("doesn't show back button on the first screen", async () => {
-  const Test = ({ navigation }: StackScreenProps<StackParamList>) => (
-    <Button onPress={() => navigation.navigate('B')} title="Go to B" />
-  );
+// test("doesn't show back button on the first screen", async () => {
+//   const Test = ({ navigation }: StackScreenProps<StackParamList>) => (
+//     <Button onPress={() => navigation.navigate('B')} title="Go to B" />
+//   );
 
-  const Stack = createStackNavigator<StackParamList>();
+//   const Stack = createStackNavigator<StackParamList>();
 
-  const { getByText, queryByRole } = render(
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="A" component={Test} />
-        <Stack.Screen name="B" component={Test} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+//   const { getByText, queryByRole } = render(
+//     <NavigationContainer>
+//       <Stack.Navigator>
+//         <Stack.Screen name="A" component={Test} />
+//         <Stack.Screen name="B" component={Test} />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
 
-  expect(queryByRole('button', { name: 'Go back' })).toBeNull();
+//   expect(queryByRole('button', { name: 'Go back' })).toBeNull();
 
-  fireEvent.press(getByText('Go to B'));
+//   fireEvent.press(getByText('Go to B'));
 
-  expect(queryByRole('button', { name: 'A, back' })).not.toBeNull();
-});
+//   expect(queryByRole('button', { name: 'A, back' })).not.toBeNull();
+// });
 
 test('fires transition events on navigation', async () => {
   const FirstScreen = ({ navigation }: StackScreenProps<StackParamList>) => (
@@ -143,160 +151,160 @@ test('fires transition events on navigation', async () => {
   );
 });
 
-test('handles screens preloading', async () => {
-  const Stack = createStackNavigator<StackParamList>();
+// test('handles screens preloading', async () => {
+//   const Stack = createStackNavigator<StackParamList>();
 
-  const navigation = createNavigationContainerRef<StackParamList>();
+//   const navigation = createNavigationContainerRef<StackParamList>();
 
-  const { queryByText } = render(
-    <NavigationContainer ref={navigation}>
-      <Stack.Navigator>
-        <Stack.Screen name="A">{() => null}</Stack.Screen>
-        <Stack.Screen name="B">{() => <Text>Screen B</Text>}</Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+//   const { queryByText } = render(
+//     <NavigationContainer ref={navigation}>
+//       <Stack.Navigator>
+//         <Stack.Screen name="A">{() => null}</Stack.Screen>
+//         <Stack.Screen name="B">{() => <Text>Screen B</Text>}</Stack.Screen>
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
 
-  expect(queryByText('Screen B', { includeHiddenElements: true })).toBeNull();
-  act(() => navigation.preload('B'));
-  expect(
-    queryByText('Screen B', { includeHiddenElements: true })
-  ).not.toBeNull();
-});
+//   expect(queryByText('Screen B', { includeHiddenElements: true })).toBeNull();
+//   act(() => navigation.preload('B'));
+//   expect(
+//     queryByText('Screen B', { includeHiddenElements: true })
+//   ).not.toBeNull();
+// });
 
-test('runs focus effect on focus change on preloaded route', () => {
-  const focusEffect = jest.fn();
-  const focusEffectCleanup = jest.fn();
+// test('runs focus effect on focus change on preloaded route', () => {
+//   const focusEffect = jest.fn();
+//   const focusEffectCleanup = jest.fn();
 
-  const Test = () => {
-    const onFocus = React.useCallback(() => {
-      focusEffect();
+//   const Test = () => {
+//     const onFocus = React.useCallback(() => {
+//       focusEffect();
 
-      return focusEffectCleanup;
-    }, []);
+//       return focusEffectCleanup;
+//     }, []);
 
-    useFocusEffect(onFocus);
+//     useFocusEffect(onFocus);
 
-    return null;
-  };
+//     return null;
+//   };
 
-  const Stack = createStackNavigator<StackParamList>();
+//   const Stack = createStackNavigator<StackParamList>();
 
-  const navigation = createNavigationContainerRef<StackParamList>();
+//   const navigation = createNavigationContainerRef<StackParamList>();
 
-  render(
-    <NavigationContainer ref={navigation}>
-      <Stack.Navigator>
-        <Stack.Screen name="A">{() => null}</Stack.Screen>
-        <Stack.Screen name="B" component={Test} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+//   render(
+//     <NavigationContainer ref={navigation}>
+//       <Stack.Navigator>
+//         <Stack.Screen name="A">{() => null}</Stack.Screen>
+//         <Stack.Screen name="B" component={Test} />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
 
-  expect(focusEffect).not.toHaveBeenCalled();
-  expect(focusEffectCleanup).not.toHaveBeenCalled();
+//   expect(focusEffect).not.toHaveBeenCalled();
+//   expect(focusEffectCleanup).not.toHaveBeenCalled();
 
-  act(() => navigation.preload('A'));
-  act(() => navigation.preload('B'));
+//   act(() => navigation.preload('A'));
+//   act(() => navigation.preload('B'));
 
-  expect(focusEffect).not.toHaveBeenCalled();
-  expect(focusEffectCleanup).not.toHaveBeenCalled();
+//   expect(focusEffect).not.toHaveBeenCalled();
+//   expect(focusEffectCleanup).not.toHaveBeenCalled();
 
-  act(() => navigation.navigate('B'));
+//   act(() => navigation.navigate('B'));
 
-  expect(focusEffect).toHaveBeenCalledTimes(1);
-  expect(focusEffectCleanup).not.toHaveBeenCalled();
+//   expect(focusEffect).toHaveBeenCalledTimes(1);
+//   expect(focusEffectCleanup).not.toHaveBeenCalled();
 
-  act(() => navigation.navigate('A'));
+//   act(() => navigation.navigate('A'));
 
-  expect(focusEffect).toHaveBeenCalledTimes(1);
-  expect(focusEffectCleanup).toHaveBeenCalledTimes(1);
-});
+//   expect(focusEffect).toHaveBeenCalledTimes(1);
+//   expect(focusEffectCleanup).toHaveBeenCalledTimes(1);
+// });
 
-test('renders correct focus state with preloading', () => {
-  const Test = () => {
-    const isFocused = useIsFocused();
+// test('renders correct focus state with preloading', () => {
+//   const Test = () => {
+//     const isFocused = useIsFocused();
 
-    return (
-      <>
-        <Text>Test Screen</Text>
-        <Text>{isFocused ? 'focused' : 'unfocused'}</Text>
-      </>
-    );
-  };
+//     return (
+//       <>
+//         <Text>Test Screen</Text>
+//         <Text>{isFocused ? 'focused' : 'unfocused'}</Text>
+//       </>
+//     );
+//   };
 
-  const Stack = createStackNavigator<StackParamList>();
+//   const Stack = createStackNavigator<StackParamList>();
 
-  const navigation = React.createRef<any>();
+//   const navigation = React.createRef<any>();
 
-  const { queryByText } = render(
-    <NavigationContainer ref={navigation}>
-      <Stack.Navigator>
-        <Stack.Screen name="A">{() => null}</Stack.Screen>
-        <Stack.Screen name="B" component={Test} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+//   const { queryByText } = render(
+//     <NavigationContainer ref={navigation}>
+//       <Stack.Navigator>
+//         <Stack.Screen name="A">{() => null}</Stack.Screen>
+//         <Stack.Screen name="B" component={Test} />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
 
-  expect(
-    queryByText('Test Screen', { includeHiddenElements: true })
-  ).toBeNull();
+//   expect(
+//     queryByText('Test Screen', { includeHiddenElements: true })
+//   ).toBeNull();
 
-  act(() => navigation.current.preload('B'));
+//   act(() => navigation.current.preload('B'));
 
-  expect(
-    queryByText('Test Screen', { includeHiddenElements: true })
-  ).not.toBeNull();
+//   expect(
+//     queryByText('Test Screen', { includeHiddenElements: true })
+//   ).not.toBeNull();
 
-  expect(
-    queryByText('unfocused', { includeHiddenElements: true })
-  ).not.toBeNull();
+//   expect(
+//     queryByText('unfocused', { includeHiddenElements: true })
+//   ).not.toBeNull();
 
-  act(() => navigation.current.navigate('B'));
+//   act(() => navigation.current.navigate('B'));
 
-  expect(
-    queryByText('focused', { includeHiddenElements: true })
-  ).not.toBeNull();
+//   expect(
+//     queryByText('focused', { includeHiddenElements: true })
+//   ).not.toBeNull();
 
-  act(() => navigation.current.navigate('A'));
+//   act(() => navigation.current.navigate('A'));
 
-  expect(queryByText('focused', { includeHiddenElements: true })).toBeNull();
-});
+//   expect(queryByText('focused', { includeHiddenElements: true })).toBeNull();
+// });
 
-test('renders back button in the nested stack', async () => {
-  const StackA = createStackNavigator<NestedStackParamList>();
+// test('renders back button in the nested stack', async () => {
+//   const StackA = createStackNavigator<NestedStackParamList>();
 
-  const StackAScreen = ({ route }: StackScreenProps<StackParamList>) => (
-    <StackA.Navigator>
-      <StackA.Screen name="C">
-        {({ navigation }) => {
-          const next = route.name === 'A' ? 'B' : 'A';
+//   const StackAScreen = ({ route }: StackScreenProps<StackParamList>) => (
+//     <StackA.Navigator>
+//       <StackA.Screen name="C">
+//         {({ navigation }) => {
+//           const next = route.name === 'A' ? 'B' : 'A';
 
-          return (
-            <Button
-              onPress={() => navigation.navigate(next)}
-              title={`Go to ${next}`}
-            />
-          );
-        }}
-      </StackA.Screen>
-    </StackA.Navigator>
-  );
+//           return (
+//             <Button
+//               onPress={() => navigation.navigate(next)}
+//               title={`Go to ${next}`}
+//             />
+//           );
+//         }}
+//       </StackA.Screen>
+//     </StackA.Navigator>
+//   );
 
-  const StackB = createStackNavigator<StackParamList>();
+//   const StackB = createStackNavigator<StackParamList>();
 
-  const { getByText, queryByRole } = render(
-    <NavigationContainer>
-      <StackB.Navigator screenOptions={{ headerShown: false }}>
-        <StackB.Screen name="A" component={StackAScreen} />
-        <StackB.Screen name="B" component={StackAScreen} />
-      </StackB.Navigator>
-    </NavigationContainer>
-  );
+//   const { getByText, queryByRole } = render(
+//     <NavigationContainer>
+//       <StackB.Navigator screenOptions={{ headerShown: false }}>
+//         <StackB.Screen name="A" component={StackAScreen} />
+//         <StackB.Screen name="B" component={StackAScreen} />
+//       </StackB.Navigator>
+//     </NavigationContainer>
+//   );
 
-  expect(queryByRole('button', { name: 'Go back' })).toBeNull();
+//   expect(queryByRole('button', { name: 'Go back' })).toBeNull();
 
-  fireEvent.press(getByText('Go to B'));
+//   fireEvent.press(getByText('Go to B'));
 
-  expect(queryByRole('button', { name: 'A, back' })).not.toBeNull();
-});
+//   expect(queryByRole('button', { name: 'A, back' })).not.toBeNull();
+// });

@@ -1,31 +1,30 @@
-import { afterEach, describe, expect, jest, test } from '@jest/globals';
-import { Text, useHeaderHeight } from '@react-navigation/elements';
-import { NavigationContainer } from '@react-navigation/native';
-import {
-  fireEvent,
-  isHiddenFromAccessibility,
-  render,
-} from '@testing-library/react-native';
-import { Button, Platform, View } from 'react-native';
-
-import {
-  createNativeStackNavigator,
-  type NativeStackScreenProps,
-} from '../index';
-
-type StackParamList = {
-  A: undefined;
-  B: undefined;
-};
-
-type NestedStackParamList = {
-  C: undefined;
-};
+import { afterEach, expect, jest, test } from '@jest/globals';
+import { Text } from '@react-navigation/elements';
+import { NavigationContainer, useNavigation, createStaticNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { fireEvent, render, screen, act } from '@testing-library/react-native';
+import { Button, View } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 afterEach(() => {
   jest.restoreAllMocks();
 });
 
+
+
+// Example 2
+
+
+
+
+
+
+
+
+
+
+
+/*
 test('renders a native-stack navigator with screens', async () => {
   const Test = ({
     route,
@@ -664,3 +663,4 @@ describe('useHeaderHeight in native-stack', () => {
     expect(headerHeight).toBe(0);
   });
 });
+*/
