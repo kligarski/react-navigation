@@ -55,16 +55,8 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ tabBarButtonTestID: 'homeTabBarButton' }}
-      />
-      <Tab.Screen
-        name="SettingsStack"
-        component={MyStack}
-        options={{ tabBarButtonTestID: 'settingsTabBarButton' }}
-      />
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="SettingsStack" component={MyStack} />
     </Tab.Navigator>
   );
 }
@@ -86,9 +78,13 @@ test('always displays settings screen after settings tab bar button press', () =
     </NavigationContainer>
   );
 
-  const homeTabButton = screen.getByTestId('homeTabBarButton');
+  const homeTabButton = screen.getByRole('button', {
+    name: 'Home, tab, 1 of 2',
+  });
 
-  const settingsTabButton = screen.getByTestId('settingsTabBarButton');
+  const settingsTabButton = screen.getByRole('button', {
+    name: 'SettingsStack, tab, 2 of 2',
+  });
 
   const event = {};
 

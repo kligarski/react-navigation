@@ -53,18 +53,8 @@ const MyStack = createStackNavigator({
 // export
 const MyTabs = createBottomTabNavigator({
   screens: {
-    Home: {
-      screen: HomeScreen,
-      options: {
-        tabBarButtonTestID: 'homeTabBarButton',
-      },
-    },
-    SettingsStack: {
-      screen: MyStack,
-      options: {
-        tabBarButtonTestID: 'settingsTabBarButton',
-      },
-    },
+    Home: HomeScreen,
+    SettingsStack: MyStack,
   },
   screenOptions: {
     headerShown: false,
@@ -84,9 +74,13 @@ test('always displays settings screen after settings tab bar button press', () =
   const MyTabNavigation = createStaticNavigation(MyTabs);
   render(<MyTabNavigation />);
 
-  const homeTabButton = screen.getByTestId('homeTabBarButton');
+  const homeTabButton = screen.getByRole('button', {
+    name: 'Home, tab, 1 of 2',
+  });
 
-  const settingsTabButton = screen.getByTestId('settingsTabBarButton');
+  const settingsTabButton = screen.getByRole('button', {
+    name: 'SettingsStack, tab, 2 of 2',
+  });
 
   const event = {};
 

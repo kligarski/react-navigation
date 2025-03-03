@@ -62,16 +62,8 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ tabBarButtonTestID: 'homeTabBarButton' }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{ tabBarButtonTestID: 'profileTabBarButton' }}
-      />
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
@@ -110,8 +102,13 @@ test('on every profile screen focus, displays loading state while waiting for da
 
   const spy = jest.spyOn(window, 'fetch').mockImplementation(mockedFetch);
 
-  const homeTabButton = screen.getByTestId('homeTabBarButton');
-  const profileTabButton = screen.getByTestId('profileTabBarButton');
+  const homeTabButton = screen.getByRole('button', {
+    name: 'Home, tab, 1 of 2',
+  });
+
+  const profileTabButton = screen.getByRole('button', {
+    name: 'Profile, tab, 2 of 2',
+  });
 
   const event = {};
   fireEvent.press(profileTabButton, event);

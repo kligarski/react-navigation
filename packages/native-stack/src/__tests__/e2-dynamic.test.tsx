@@ -56,7 +56,7 @@ test('surprise text appears after transition to surprise screen is complete', ()
     </NavigationContainer>
   );
 
-  fireEvent.press(screen.getByText('Click here!'));
+  fireEvent.press(screen.getByRole('button', { name: 'Click here!' }));
 
   expect(screen.queryByText('Surprise!')).not.toBeOnTheScreen();
   act(() => jest.runAllTimers());

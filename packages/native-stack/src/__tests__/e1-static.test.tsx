@@ -20,18 +20,8 @@ const SettingsScreen = () => {
 // export
 const MyTabs = createBottomTabNavigator({
   screens: {
-    Home: {
-      screen: HomeScreen,
-      options: {
-        tabBarButtonTestID: 'homeTabBarButton',
-      },
-    },
-    Settings: {
-      screen: SettingsScreen,
-      options: {
-        tabBarButtonTestID: 'settingsTabBarButton',
-      },
-    },
+    Home: HomeScreen,
+    Settings: SettingsScreen,
   },
   screenOptions: {
     headerShown: false,
@@ -49,7 +39,7 @@ test('navigates to settings by tab bar button press', () => {
   const MyTabNavigation = createStaticNavigation(MyTabs);
   render(<MyTabNavigation />);
 
-  const button = screen.getByTestId('settingsTabBarButton');
+  const button = screen.getByRole('button', { name: 'Settings, tab, 2 of 2' });
 
   const event = {};
   fireEvent.press(button, event);

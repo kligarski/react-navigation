@@ -23,20 +23,8 @@ const Tab = createBottomTabNavigator();
 const MyTabs = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarButtonTestID: 'homeTabBarButton',
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          tabBarButtonTestID: 'settingsTabBarButton',
-        }}
-      />
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
 };
@@ -55,7 +43,7 @@ test('navigates to settings by tab bar button press', () => {
     </NavigationContainer>
   );
 
-  const button = screen.getByTestId('settingsTabBarButton');
+  const button = screen.getByRole('button', { name: 'Settings, tab, 2 of 2' });
 
   const event = {};
   fireEvent.press(button, event);
