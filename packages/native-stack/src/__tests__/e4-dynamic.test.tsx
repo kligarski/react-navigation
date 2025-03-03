@@ -59,7 +59,7 @@ function ProfileScreen() {
 const Tab = createBottomTabNavigator();
 
 // export
-function TabNavigator() {
+function MyTabs() {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
@@ -82,7 +82,7 @@ import { expect, jest, test } from '@jest/globals';
 import { NavigationContainer } from '@react-navigation/native';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-// import { TabNavigator } from './TabNavigator';
+// import { MyTabs } from './MyTabs';
 
 async function mockedFetch() {
   const mockResponse = {
@@ -104,7 +104,7 @@ test('on every profile screen focus, displays loading state while waiting for da
 
   render(
     <NavigationContainer>
-      <TabNavigator />
+      <MyTabs />
     </NavigationContainer>
   );
 

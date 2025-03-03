@@ -34,7 +34,7 @@ const SurpriseScreen = () => {
 };
 
 // export
-const StackNavigator = createStackNavigator({
+const MyStack = createStackNavigator({
   screens: {
     Home: HomeScreen,
     Surprise: SurpriseScreen,
@@ -46,13 +46,13 @@ import { expect, jest, test } from '@jest/globals';
 import { createStaticNavigation } from '@react-navigation/native';
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 
-// import { StackNavigator } from './StackNavigator';
+// import { MyStack } from './MyStack';
 
 test('surprise text appears after transition to surprise screen is complete', () => {
   jest.useFakeTimers();
 
-  const StackNavigation = createStaticNavigation(StackNavigator);
-  render(<StackNavigation />);
+  const MyStackNavigation = createStaticNavigation(MyStack);
+  render(<MyStackNavigation />);
 
   fireEvent.press(screen.getByText('Click here!'));
 

@@ -20,7 +20,7 @@ const SettingsScreen = () => {
 const Tab = createBottomTabNavigator();
 
 // export
-const TabNavigator = () => {
+const MyTabs = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
@@ -46,12 +46,12 @@ import { expect, test } from '@jest/globals';
 import { NavigationContainer } from '@react-navigation/native';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-// import { TabNavigator } from './TabNavigator';
+// import { MyTabs } from './MyTabs';
 
 test('navigates to settings by tab bar button press', () => {
   render(
     <NavigationContainer>
-      <TabNavigator />
+      <MyTabs />
     </NavigationContainer>
   );
 

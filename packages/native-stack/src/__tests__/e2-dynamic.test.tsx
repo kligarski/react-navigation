@@ -29,7 +29,7 @@ const SurpriseScreen = ({ navigation }) => {
 };
 
 // export
-const StackNavigator = () => {
+const MyStack = () => {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator>
@@ -45,14 +45,14 @@ import { expect, jest, test } from '@jest/globals';
 import { NavigationContainer } from '@react-navigation/native';
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 
-// import { StackNavigator } from './StackNavigator';
+// import { MyStack } from './MyStack';
 
 test('surprise text appears after transition to surprise screen is complete', () => {
   jest.useFakeTimers();
 
   render(
     <NavigationContainer>
-      <StackNavigator />
+      <MyStack />
     </NavigationContainer>
   );
 

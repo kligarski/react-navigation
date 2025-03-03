@@ -40,7 +40,7 @@ function DetailsScreen({ navigation }) {
 
 const SettingsStack = createStackNavigator();
 
-function SettingsStackScreen() {
+function MyStack() {
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen name="Settings" component={SettingsScreen} />
@@ -52,7 +52,7 @@ function SettingsStackScreen() {
 const Tab = createBottomTabNavigator();
 
 // export
-function TabNavigator() {
+function MyTabs() {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
@@ -62,7 +62,7 @@ function TabNavigator() {
       />
       <Tab.Screen
         name="SettingsStack"
-        component={SettingsStackScreen}
+        component={MyStack}
         options={{ tabBarButtonTestID: 'settingsTabBarButton' }}
       />
     </Tab.Navigator>
@@ -75,14 +75,14 @@ import { expect, test } from '@jest/globals';
 import { NavigationContainer } from '@react-navigation/native';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-// import { TabNavigator } from './TabNavigator';
+// import { MyTabs } from './MyTabs';
 
 test('always displays settings screen after settings tab bar button press', () => {
   jest.useFakeTimers();
 
   render(
     <NavigationContainer>
-      <TabNavigator />
+      <MyTabs />
     </NavigationContainer>
   );
 
