@@ -24,7 +24,7 @@ afterEach(() => {
 
 
 
-/*
+
 test('renders a native-stack navigator with screens', async () => {
   const Test = ({
     route,
@@ -663,4 +663,3 @@ describe('useHeaderHeight in native-stack', () => {
     expect(headerHeight).toBe(0);
   });
 });
-*/

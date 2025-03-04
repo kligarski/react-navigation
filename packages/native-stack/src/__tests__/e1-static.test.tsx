@@ -29,20 +29,22 @@ const MyTabs = createBottomTabNavigator({
 });
 
 // -----
-import { expect, test } from '@jest/globals';
+import { expect, jest, test } from '@jest/globals';
 import { createStaticNavigation } from '@react-navigation/native';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { render, screen, userEvent } from '@testing-library/react-native';
 
 // import { MyTabs } from './MyTabs';
 
-test('navigates to settings by tab bar button press', () => {
+jest.useFakeTimers();
+
+test('navigates to settings by tab bar button press', async () => {
+  const user = userEvent.setup();
+
   const MyTabNavigation = createStaticNavigation(MyTabs);
   render(<MyTabNavigation />);
 
   const button = screen.getByRole('button', { name: 'Settings, tab, 2 of 2' });
-
-  const event = {};
-  fireEvent.press(button, event);
+  await user.press(button);
 
   expect(screen.getByText('Settings screen')).toBeOnTheScreen();
 });

@@ -43,12 +43,14 @@ const MyStack = () => {
 
 import { expect, jest, test } from '@jest/globals';
 import { NavigationContainer } from '@react-navigation/native';
-import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 // import { MyStack } from './MyStack';
 
-test('surprise text appears after transition to surprise screen is complete', () => {
-  jest.useFakeTimers();
+jest.useFakeTimers();
+
+test('surprise text appears after transition to surprise screen is complete', async () => {
+  const user = userEvent.setup();
 
   render(
     <NavigationContainer>
@@ -56,7 +58,7 @@ test('surprise text appears after transition to surprise screen is complete', ()
     </NavigationContainer>
   );
 
-  fireEvent.press(screen.getByRole('button', { name: 'Click here!' }));
+  await user.press(screen.getByRole('button', { name: 'Click here!' }));
 
   expect(screen.queryByText('Surprise!')).not.toBeOnTheScreen();
   act(() => jest.runAllTimers());

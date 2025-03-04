@@ -71,7 +71,7 @@ const MyTabs = createBottomTabNavigator({
 
 import { expect, jest, test } from '@jest/globals';
 import { createStaticNavigation } from '@react-navigation/native';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { render, screen, userEvent } from '@testing-library/react-native';
 
 // import { MyTabs } from './MyTabs';
 
@@ -90,8 +90,10 @@ async function mockedFetch() {
   };
 }
 
+jest.useFakeTimers();
+
 test('on every profile screen focus, displays loading state while waiting for data and then shows fetched profile', async () => {
-  // jest.useFakeTimers();
+  const user = userEvent.setup();
 
   const MyTabNavigation = createStaticNavigation(MyTabs);
   render(<MyTabNavigation />);
@@ -106,19 +108,18 @@ test('on every profile screen focus, displays loading state while waiting for da
     name: 'Profile, tab, 2 of 2',
   });
 
-  const event = {};
-  fireEvent.press(profileTabButton, event);
+  await user.press(profileTabButton);
   // act(() => jest.runAllTimers());
 
-  expect(screen.queryByText('Loading')).toBeOnTheScreen();
+  expect(screen.getByText('Loading')).toBeOnTheScreen();
   expect(spy).toHaveBeenCalled();
   expect(await screen.findByText('CookieDough')).toBeOnTheScreen();
 
-  fireEvent.press(homeTabButton, event);
-  fireEvent.press(profileTabButton, event);
+  await user.press(homeTabButton);
+  await user.press(profileTabButton);
   // act(() => jest.runAllTimers());
 
-  expect(screen.queryByText('Loading')).toBeOnTheScreen();
+  expect(screen.getByText('Loading')).toBeOnTheScreen();
   expect(spy).toHaveBeenCalled();
   expect(await screen.findByText('CookieDough')).toBeOnTheScreen();
 });

@@ -62,14 +62,16 @@ const MyTabs = createBottomTabNavigator({
 });
 
 // -----
-import { expect, test } from '@jest/globals';
+import { expect, jest, test } from '@jest/globals';
 import { createStaticNavigation } from '@react-navigation/native';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { render, screen, userEvent } from '@testing-library/react-native';
 
 // import { MyTabs } from './MyTabs';
 
-test('always displays settings screen after settings tab bar button press', () => {
-  //   jest.useFakeTimers();
+jest.useFakeTimers();
+
+test('always displays settings screen after settings tab bar button press', async () => {
+  const user = userEvent.setup();
 
   const MyTabNavigation = createStaticNavigation(MyTabs);
   render(<MyTabNavigation />);
@@ -82,21 +84,19 @@ test('always displays settings screen after settings tab bar button press', () =
     name: 'SettingsStack, tab, 2 of 2',
   });
 
-  const event = {};
-
-  fireEvent.press(settingsTabButton, event);
+  await user.press(settingsTabButton);
   //   act(() => jest.runAllTimers());
   expect(screen.getByText('Settings screen')).toBeOnTheScreen();
 
-  fireEvent.press(screen.getByText('Go to Details'), event);
+  await user.press(screen.getByText('Go to Details'));
   //   act(() => jest.runAllTimers());
   expect(screen.getByText('Details screen')).toBeOnTheScreen();
 
-  fireEvent.press(homeTabButton, event);
+  await user.press(homeTabButton);
   //   act(() => jest.runAllTimers());
   expect(screen.getByText('Home screen')).toBeOnTheScreen();
 
-  fireEvent.press(settingsTabButton, event);
+  await user.press(settingsTabButton);
   //   act(() => jest.runAllTimers());
   expect(screen.getByText('Settings screen')).toBeOnTheScreen();
 });
