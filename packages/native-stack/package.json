@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "@react-navigation/elements": "^2.2.5",
+    "react-native-reanimated": "^3.17.1",
     "warn-once": "^0.1.1"
   },
   "devDependencies": {

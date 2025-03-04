@@ -74,7 +74,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 
 jest.useFakeTimers();
 
-test('always displays settings screen after settings tab bar button press', async () => {
+test('displays settings screen after settings tab bar button press', async () => {
   const user = userEvent.setup();
 
   const MyTabNavigation = createStaticNavigation(MyTabs);

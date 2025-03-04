@@ -35,7 +35,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 
 // import { MyTabs } from './MyTabs';
 
-jest.useFakeTimers();
+// jest.useFakeTimers();
 
 test('navigates to settings by tab bar button press', async () => {
   const user = userEvent.setup();

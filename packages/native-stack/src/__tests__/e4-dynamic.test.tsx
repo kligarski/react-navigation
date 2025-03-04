@@ -11,47 +11,60 @@ function HomeScreen() {
   );
 }
 
-const url = 'placeholder_url';
+const url = 'https://pokeapi.co/api/v2/pokemon/ditto';
+
+type PokemonData = {
+  id: number;
+  name: string;
+};
+
+type Result =
+  | { status: 'loading' }
+  | { status: 'success'; data: PokemonData }
+  | { status: 'error' };
 
 function ProfileScreen() {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState();
-  const [error, setError] = useState();
+  const [profileData, setProfileData] = useState<Result>({ status: 'loading' });
 
   useFocusEffect(
     useCallback(() => {
-      let isActive = true;
+      if (profileData.status !== 'success') {
+        setProfileData({ status: 'loading' });
 
-      const fetchUser = async () => {
-        try {
-          const data = await (await fetch(url)).json();
+        const controller = new AbortController();
+        const signal = controller.signal;
 
-          if (isActive) {
-            setData(data);
-            setLoading(false);
+        const fetchUser = async () => {
+          try {
+            const response = await fetch(url, { signal });
+            const data = await response.json();
+
+            setProfileData({ status: 'success', data: data });
+          } catch (error) {
+            setProfileData({ status: 'error' });
           }
-        } catch (error) {
-          setError(error);
-          setLoading(false);
-        }
-      };
+        };
 
-      fetchUser();
+        fetchUser();
 
-      return () => {
-        setData(undefined);
-        setError(undefined);
-        setLoading(true);
-        isActive = false;
-      };
-    }, [])
+        return () => {
+          controller.abort();
+        };
+      } else {
+        return () => {};
+      }
+    }, [profileData.status])
   );
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      {loading && <Text>Loading</Text>}
-      {!loading && error && <Text>{error.message}</Text>}
-      {!loading && !error && <Text>{data.profile.nick}</Text>}
+      {profileData.status === 'loading' ? (
+        <Text>Loading...</Text>
+      ) : profileData.status === 'error' ? (
+        <Text>Error!</Text>
+      ) : profileData.status === 'success' ? (
+        <Text>{profileData.data.name}</Text>
+      ) : null}
     </View>
   );
 }
@@ -72,28 +85,34 @@ function MyTabs() {
 
 import { expect, jest, test } from '@jest/globals';
 import { NavigationContainer } from '@react-navigation/native';
-import { render, screen, userEvent } from '@testing-library/react-native';
+import { act, render, screen, userEvent } from '@testing-library/react-native';
+
+import { afterAll, afterEach, beforeAll } from '@jest/globals';
+
+import { server } from '../../../../mocks/server';
+
+beforeAll(() => {
+  // Enable API mocking before all the tests.
+  server.listen();
+});
+
+afterEach(() => {
+  // Reset the request handlers between each test.
+  // This way the handlers we add on a per-test basis
+  // do not leak to other, irrelevant tests.
+  server.resetHandlers();
+});
+
+afterAll(() => {
+  // Finally, disable API mocking after the tests are done.
+  server.close();
+});
 
 // import { MyTabs } from './MyTabs';
 
-async function mockedFetch() {
-  const mockResponse = {
-    profile: {
-      nick: 'CookieDough',
-    },
-  };
-  return {
-    ok: true,
-    status: 200,
-    json: async () => {
-      return mockResponse;
-    },
-  };
-}
-
 jest.useFakeTimers();
 
-test('on every profile screen focus, displays loading state while waiting for data and then shows fetched profile', async () => {
+test('on profile screen focus, displays loading state while waiting for data and then shows fetched profile on every refocus', async () => {
   const user = userEvent.setup();
 
   render(
@@ -101,8 +120,6 @@ test('on every profile screen focus, displays loading state while waiting for da
       <MyTabs />
     </NavigationContainer>
   );
-
-  const spy = jest.spyOn(window, 'fetch').mockImplementation(mockedFetch);
 
   const homeTabButton = screen.getByRole('button', {
     name: 'Home, tab, 1 of 2',
@@ -113,17 +130,17 @@ test('on every profile screen focus, displays loading state while waiting for da
   });
 
   await user.press(profileTabButton);
-  // act(() => jest.runAllTimers());
+  expect(screen.getByText('Loading...')).toBeVisible();
 
-  expect(screen.getByText('Loading')).toBeVisible();
-  expect(spy).toHaveBeenCalled();
-  expect(await screen.findByText('CookieDough')).toBeVisible();
+  await act(() => jest.runAllTimers());
+
+  expect(screen.getByText('ditto')).toBeVisible();
 
   await user.press(homeTabButton);
   await user.press(profileTabButton);
-  // act(() => jest.runAllTimers());
+  expect(screen.queryByText('Loading...')).not.toBeVisible();
 
-  expect(screen.getByText('Loading')).toBeVisible();
-  expect(spy).toHaveBeenCalled();
-  expect(await screen.findByText('CookieDough')).toBeVisible();
+  await act(() => jest.runAllTimers());
+
+  expect(screen.getByText('ditto')).toBeVisible();
 });
