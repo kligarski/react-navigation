@@ -86,17 +86,17 @@ test('always displays settings screen after settings tab bar button press', asyn
 
   await user.press(settingsTabButton);
   //   act(() => jest.runAllTimers());
-  expect(screen.getByText('Settings screen')).toBeOnTheScreen();
+  expect(screen.getByText('Settings screen')).toBeVisible();
 
   await user.press(screen.getByText('Go to Details'));
   //   act(() => jest.runAllTimers());
-  expect(screen.getByText('Details screen')).toBeOnTheScreen();
+  expect(screen.getByText('Details screen')).toBeVisible();
 
   await user.press(homeTabButton);
   //   act(() => jest.runAllTimers());
-  expect(screen.getByText('Home screen')).toBeOnTheScreen();
+  expect(screen.getByText('Home screen')).toBeVisible();
 
   await user.press(settingsTabButton);
   //   act(() => jest.runAllTimers());
-  expect(screen.getByText('Settings screen')).toBeOnTheScreen();
+  expect(screen.getByText('Settings screen')).toBeVisible();
 });

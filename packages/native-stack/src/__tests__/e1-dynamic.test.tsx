@@ -50,5 +50,5 @@ test('navigates to settings by tab bar button press', async () => {
   const button = screen.getByRole('button', { name: 'Settings, tab, 2 of 2' });
   await user.press(button);
 
-  expect(screen.getByText('Settings screen')).toBeOnTheScreen();
+  expect(screen.getByText('Settings screen')).toBeVisible();
 });

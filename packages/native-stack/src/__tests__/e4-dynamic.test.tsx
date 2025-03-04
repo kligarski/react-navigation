@@ -115,15 +115,15 @@ test('on every profile screen focus, displays loading state while waiting for da
   await user.press(profileTabButton);
   // act(() => jest.runAllTimers());
 
-  expect(screen.getByText('Loading')).toBeOnTheScreen();
+  expect(screen.getByText('Loading')).toBeVisible();
   expect(spy).toHaveBeenCalled();
-  expect(await screen.findByText('CookieDough')).toBeOnTheScreen();
+  expect(await screen.findByText('CookieDough')).toBeVisible();
 
   await user.press(homeTabButton);
   await user.press(profileTabButton);
   // act(() => jest.runAllTimers());
 
-  expect(screen.getByText('Loading')).toBeOnTheScreen();
+  expect(screen.getByText('Loading')).toBeVisible();
   expect(spy).toHaveBeenCalled();
-  expect(await screen.findByText('CookieDough')).toBeOnTheScreen();
+  expect(await screen.findByText('CookieDough')).toBeVisible();
 });

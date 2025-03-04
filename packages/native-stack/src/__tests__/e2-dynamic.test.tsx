@@ -60,7 +60,7 @@ test('surprise text appears after transition to surprise screen is complete', as
 
   await user.press(screen.getByRole('button', { name: 'Click here!' }));
 
-  expect(screen.queryByText('Surprise!')).not.toBeOnTheScreen();
+  expect(screen.queryByText('Surprise!')).not.toBeVisible();
   act(() => jest.runAllTimers());
-  expect(screen.getByText('Surprise!')).toBeOnTheScreen();
+  expect(screen.getByText('Surprise!')).toBeVisible();
 });
