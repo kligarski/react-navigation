@@ -54,7 +54,7 @@ const Tab = createBottomTabNavigator();
 // export
 function MyTabs() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator id="MyTabs" screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="SettingsStack" component={MyStack} />
     </Tab.Navigator>

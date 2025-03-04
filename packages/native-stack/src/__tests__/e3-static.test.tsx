@@ -30,9 +30,12 @@ function DetailsScreen() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const unsubscribe = navigation.getParent().addListener('tabPress', (e) => {
-      navigation.popToTop();
-    });
+    const unsubscribe = navigation
+      .getParent('MyTabs')
+      .addListener('tabPress', (e) => {
+        navigation.popToTop();
+      });
+
     return unsubscribe;
   }, [navigation]);
 
@@ -52,6 +55,7 @@ const MyStack = createStackNavigator({
 
 // export
 const MyTabs = createBottomTabNavigator({
+  id: 'MyTabs',
   screens: {
     Home: HomeScreen,
     SettingsStack: MyStack,
